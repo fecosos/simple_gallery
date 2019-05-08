@@ -16,8 +16,6 @@
     max-width: 100%;
   }
 
-  & > .arrow {
-  }
   .button {
     background-color: transparent;
     border: 0;
@@ -30,6 +28,9 @@
       outline: 0;
     }
 
+    & > .arrow {
+      width: 60px;
+    }
     &.left {
       left: 0;
     }

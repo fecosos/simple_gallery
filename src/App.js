@@ -39,7 +39,6 @@ class Gallery extends React.Component {
 
   render() {
     const { currentImage } = this.state;
-    console.log(currentImage);
 
     return (
       <div className="Gallery">
