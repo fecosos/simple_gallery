@@ -59,20 +59,29 @@ class Gallery extends React.Component {
 function App() {
   return (
     <div className="App">
-      <header className="App-header">página web en construcción</header>
+      <header className="App-header">
+        <h1>página web en construcción</h1>
+      </header>
       <Gallery />
       <section className="footer">
         <span className="text">encontranos en </span>
         <a
           className="instagram-link a-link"
-          href="//instagram.com"
+          href="https://www.instagram.com/estudio.ripani/"
           rel="noopener noreferrer"
           target="_blank"
         >
           instagram
         </a>
         <span className="slash">—</span>
-        <span className="email-link a-link">info.ripani@gmail.com</span>
+        <a
+          href="mailto:info.ripani@gmail.com"
+          className="email-link a-link"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          info.ripani@gmail.com
+        </a>
       </section>
     </div>
   );
