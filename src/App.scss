@@ -12,6 +12,10 @@
   width: 100%;
   position: relative;
 
+  img {
+    max-width: 100%;
+  }
+
   & > .arrow {
   }
   .button {
@@ -19,9 +23,13 @@
     border: 0;
     cursor: pointer;
     position: absolute;
+    top: -80px;
+    bottom: -80px;
 
-    top: -50px;
-    bottom: -50px;
+    &:focus {
+      outline: 0;
+    }
+
     &.left {
       left: 0;
     }

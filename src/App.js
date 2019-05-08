@@ -1,21 +1,60 @@
 import React from "react";
 import "./App.scss";
-import image from "./assets/01.jpg";
 import arrow_right from "./assets/arrow-right.png";
 import arrow_left from "./assets/arrow-left.png";
+import { imagesUrls } from "./assets/gallery";
 
-function Gallery() {
-  return (
-    <div className="Gallery">
-      <button className="button left">
-        <img src={arrow_left} className="arrow left" alt="arrow left" />
-      </button>
-      <img src={image} className="gallery-image" alt="logo" />
-      <button className="button right">
-        <img src={arrow_right} className="arrow right" alt="arrow right" />
-      </button>
-    </div>
-  );
+// const Images = () => <div> {imagesUrls.map(path => <img key={path} src={path} alt="" />)}</div>;
+
+class Gallery extends React.Component {
+  state = {
+    currentImage: 0
+  };
+
+  handlePreviousImage = () => {
+    const { currentImage } = this.state;
+    if (currentImage !== 0) {
+      this.setState({
+        currentImage: currentImage - 1
+      });
+
+      return;
+    }
+
+    this.setState({ currentImage: imagesUrls.length - 1 });
+  };
+
+  handleNextImage = () => {
+    const { currentImage } = this.state;
+    if (currentImage !== imagesUrls.length - 1) {
+      this.setState({
+        currentImage: currentImage + 1
+      });
+
+      return;
+    }
+
+    this.setState({ currentImage: 0 });
+  };
+
+  render() {
+    const { currentImage } = this.state;
+    console.log(currentImage);
+
+    return (
+      <div className="Gallery">
+        <button className="button left" onClick={this.handlePreviousImage}>
+          <img src={arrow_left} className="arrow left" alt="arrow left" />
+        </button>
+        <div className="images">
+          <img src={imagesUrls[currentImage]} alt="" />
+        </div>
+        <button className="button right" onClick={this.handleNextImage}>
+          <img src={arrow_right} className="arrow right" alt="arrow right" />
+        </button>
+      </div>
+    );
+  }
 }
 
 function App() {
