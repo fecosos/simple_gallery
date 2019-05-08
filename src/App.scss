@@ -1,0 +1,55 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 10px;
+}
+
+.Gallery {
+  padding: 30px 10px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+
+  & > .arrow {
+  }
+  .button {
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    position: absolute;
+
+    top: -50px;
+    bottom: -50px;
+    &.left {
+      left: 0;
+    }
+
+    &.right {
+      right: 0;
+    }
+  }
+}
+
+.footer {
+  .text {
+  }
+  .a-link {
+    text-decoration: underline;
+    color: #060606;
+    &:hover {
+      color: #655d5d;
+    }
+  }
+
+  .instagram-link {
+  }
+
+  .slash {
+    padding: 4px;
+  }
+
+  .email-link {
+  }
+}
