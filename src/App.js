@@ -72,9 +72,7 @@ class Gallery extends React.Component {
   };
 
   render() {
-    console.log(this.state.distanceFromCenter);
     const { currentImage } = this.state;
-    // alert(`${isMobile()}`);
     const buttonStyles = {
       display: isMobile() ? "none" : "block"
     };
