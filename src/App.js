@@ -3,12 +3,28 @@ import "./App.scss";
 import arrow_right from "./assets/arrow-right.png";
 import arrow_left from "./assets/arrow-left.png";
 import { imagesUrls } from "./assets/gallery";
-
+import debounce from "lodash/debounce";
 // const Images = () => <div> {imagesUrls.map(path => <img key={path} src={path} alt="" />)}</div>;
 
+const isMobile = () => {
+  if (
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    )
+  ) {
+    return true;
+  }
+  return false;
+};
+
 class Gallery extends React.Component {
+  constructor(props) {
+    super(props);
+    this.debouncedMouseMove = debounce(this.debouncedMouseMove.bind(this), 1);
+  }
   state = {
-    currentImage: 0
+    currentImage: 0,
+    distanceFromCenter: 0
   };
 
   handlePreviousImage = () => {
@@ -37,16 +53,61 @@ class Gallery extends React.Component {
     this.setState({ currentImage: 0 });
   };
 
+  handleMouseMove = event => {
+    event.persist();
+    this.debouncedMouseMove(event);
+  };
+  debouncedMouseMove = event => {
+    // this.setState({ mouseX: event.clientX })
+    //
+    const lowerMovement = movement => Math.floor(movement * 0.015);
+    if (event.target.id === "hover-button-left") {
+      const distanceFromCenter = event.target.offsetWidth - event.clientX;
+      this.setState({ distanceFromCenter: -lowerMovement(distanceFromCenter) });
+    }
+    if (event.target.id === "hover-button-right") {
+      const distanceFromCenter = event.clientX - event.target.offsetWidth;
+      this.setState({ distanceFromCenter: lowerMovement(distanceFromCenter) });
+    }
+  };
+
   render() {
+    console.log(this.state.distanceFromCenter);
     const { currentImage } = this.state;
+    // alert(`${isMobile()}`);
+    const buttonStyles = {
+      display: isMobile() ? "none" : "block"
+    };
 
     return (
       <div className="Gallery">
+        <div
+          id="hover-button-left"
+          style={buttonStyles}
+          onClick={this.handlePreviousImage}
+          onMouseMove={this.handleMouseMove}
+          className="button-left"
+        />
+        <div
+          id="hover-button-right"
+          style={buttonStyles}
+          onClick={this.handleNextImage}
+          onMouseMove={this.handleMouseMove}
+          className="button-right"
+        />
         <button className="button left" onClick={this.handlePreviousImage}>
           <img src={arrow_left} className="arrow left" alt="arrow left" />
         </button>
-        <div className="images">
-          <img src={imagesUrls[currentImage]} alt="" />
+        <div
+          style={{
+            transform: `translateX(${this.state.distanceFromCenter}px)`
+          }}
+          className="images"
+        >
+          <img
+            src={imagesUrls[currentImage]}
+            alt={`Trabajos realizados ${currentImage + 1}`}
+          />
         </div>
         <button className="button right" onClick={this.handleNextImage}>
           <img src={arrow_right} className="arrow right" alt="arrow right" />
@@ -56,35 +117,51 @@ class Gallery extends React.Component {
   }
 }
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>página web en construcción</h1>
-      </header>
-      <Gallery />
-      <section className="footer">
-        <span className="text">encontranos en </span>
-        <a
-          className="instagram-link a-link"
-          href="https://www.instagram.com/estudio.ripani/"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          instagram
-        </a>
-        <span className="slash">—</span>
-        <a
-          href="mailto:info.ripani@gmail.com"
-          className="email-link a-link"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          info.ripani@gmail.com
-        </a>
-      </section>
-    </div>
-  );
+class App extends React.Component {
+  state = {
+    mouseX: 0,
+    mouseY: 0
+  };
+
+  // setMouseXY()
+  // handleMouseMove = (event) => {
+  //   this.setState({
+  //     mouseX: event.clientX,
+  //     mouseY: event.clientY
+  //   })
+  // };
+
+  render() {
+    // console.log('state', this.state.mouseX, this.state.mouseY);
+    return (
+      <div className="App" onMouseMove={this.handleMouseMove}>
+        <header className="App-header">
+          <h1>página web en construcción</h1>
+        </header>
+        <Gallery />
+        <section className="footer">
+          <span className="text">encontranos en </span>
+          <a
+            className="instagram-link a-link"
+            href="https://www.instagram.com/estudio.ripani/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            instagram
+          </a>
+          <span className="slash">—</span>
+          <a
+            href="mailto:info.ripani@gmail.com"
+            className="email-link a-link"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            info.ripani@gmail.com
+          </a>
+        </section>
+      </div>
+    );
+  }
 }
 
 export default App;
