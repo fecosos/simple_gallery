@@ -23,21 +23,28 @@ function Gallery() {
 
   useEffect(() => {
     setTimeout(() => {
+      console.log("aca");
+
       setImageOpacity(1);
     }, 500);
   }, []);
 
-  const fadeOutImage = () =>
-    new Promise(function(resolve, reject) {
-      setImageOpacity(0);
-      setTimeout(() => {
-        setImageOpacity(1);
-        resolve();
-      }, 400);
-    });
+  useEffect(() => {
+    setTimeout(() => {
+      setImageOpacity(1);
+    }, 100);
+  }, [currentImage]);
+
+  // const fadeOutImage = () =>
+  //   new Promise(function(resolve, reject) {
+  //     setImageOpacity(0);
+  //     setTimeout(() => {
+  //       resolve();
+  //     }, 350);
+  //   });
 
   const handlePreviousImage = async () => {
-    await fadeOutImage();
+    // await fadeOutImage();
     if (currentImage !== 0) {
       setCurrentImage(currentImage - 1);
 
@@ -48,7 +55,7 @@ function Gallery() {
   };
 
   const handleNextImage = async () => {
-    await fadeOutImage();
+    // await fadeOutImage();
 
     if (currentImage !== imagesUrls.length - 1) {
       setCurrentImage(currentImage + 1);
@@ -67,7 +74,8 @@ function Gallery() {
     x - window.innerWidth / 2,
     y - window.innerHeight / 2
   ];
-  const trans1 = (x, y) => `translate3d(${x / 60}px,${y / 70}px,0)`;
+  const trans1 = (x, y) =>
+    `translate3d(${Math.floor(x / 60)}px,${Math.floor(y / 70)}px,0)`;
 
   const [props, set] = useSpring(() => ({
     xy: [0, 0],
@@ -100,10 +108,16 @@ function Gallery() {
         <img src={arrow_left} className="arrow left" alt="arrow left" />
       </button>
       <animated.div style={imageStyles} className="images">
-        <img
-          src={imagesUrls[currentImage]}
-          alt={`Trabajos realizados ${currentImage + 1}`}
-        />
+        {imagesUrls.map((image, index) => {
+          return (
+            <img
+              style={{ opacity: `${index === currentImage ? 1 : 0}` }}
+              src={image}
+              key={index}
+              alt={`Trabajos realizados ${currentImage + 1}`}
+            />
+          );
+        })}
       </animated.div>
       <button className="button right" onClick={handleNextImage}>
         <img src={arrow_right} className="arrow right" alt="arrow right" />

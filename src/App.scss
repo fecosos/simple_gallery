@@ -24,9 +24,19 @@ header h1 {
   z-index: 1;
 
   .images {
-    transition: transform 0.4s cubic-bezier(0.31, 0.97, 0.82, 0.48),
-      opacity 0.5s ease;
+    transition: transform 0.4s cubic-bezier(0.31, 0.97, 0.82, 0.48);
     opacity: 0;
+    line-height: 0;
+    width: calc(100% - 120px);
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      position: absolute;
+      transition: opacity 0.5s ease;
+    }
   }
   img {
     max-width: 100%;
@@ -104,9 +114,15 @@ header h1 {
 }
 
 @media (max-width: 650px) {
-  .Gallery .button {
-    top: initial;
-    bottom: -20px;
+  .Gallery {
+    .button {
+      top: initial;
+      position: fixed;
+      bottom: 0;
+    }
+    .images {
+      max-height: 90vh;
+    }
   }
   .footer {
     position: absolute;
@@ -114,6 +130,7 @@ header h1 {
     right: 0;
     bottom: 20px;
     text-align: center;
+    z-index: 0;
 
     .text {
       display: none;
