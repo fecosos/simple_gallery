@@ -24,8 +24,28 @@ class Gallery extends React.Component {
   }
   state = {
     currentImage: 0,
-    distanceFromCenter: 0
+    mouseDistanceFromCenter: 0,
+    imageOpacity: 0,
+    loaded: false
   };
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        imageOpacity: 1,
+        loaded: true
+      });
+    }, 500);
+  }
+
+  // handleFadeAndNext = nextOrPrevFunction => {
+  //   this.setState({ imageOpacity: 0 })
+
+  //   setTimeout(() => {
+  //     nextOrPrevFunction();
+  //     this.setState({ imageOpacity: 1 })
+  //   }, 1000);
+  // }
 
   handlePreviousImage = () => {
     const { currentImage } = this.state;
@@ -57,24 +77,35 @@ class Gallery extends React.Component {
     event.persist();
     this.debouncedMouseMove(event);
   };
+
   debouncedMouseMove = event => {
     // this.setState({ mouseX: event.clientX })
     //
-    const lowerMovement = movement => Math.floor(movement * 0.015);
+    const lowerMovementRate = movement => Math.floor(movement * 0.015);
     if (event.target.id === "hover-button-left") {
-      const distanceFromCenter = event.target.offsetWidth - event.clientX;
-      this.setState({ distanceFromCenter: -lowerMovement(distanceFromCenter) });
+      const mouseDistanceFromCenter = event.target.offsetWidth - event.clientX;
+      this.setState({
+        mouseDistanceFromCenter: -lowerMovementRate(mouseDistanceFromCenter)
+      });
     }
     if (event.target.id === "hover-button-right") {
-      const distanceFromCenter = event.clientX - event.target.offsetWidth;
-      this.setState({ distanceFromCenter: lowerMovement(distanceFromCenter) });
+      const mouseDistanceFromCenter = event.clientX - event.target.offsetWidth;
+      this.setState({
+        mouseDistanceFromCenter: lowerMovementRate(mouseDistanceFromCenter)
+      });
     }
   };
 
   render() {
-    const { currentImage } = this.state;
+    const { currentImage, imageOpacity } = this.state;
+
     const buttonStyles = {
       display: isMobile() ? "none" : "block"
+    };
+
+    const imageStyles = {
+      opacity: imageOpacity,
+      transform: `translateX(${this.state.mouseDistanceFromCenter}px)`
     };
 
     return (
@@ -96,12 +127,7 @@ class Gallery extends React.Component {
         <button className="button left" onClick={this.handlePreviousImage}>
           <img src={arrow_left} className="arrow left" alt="arrow left" />
         </button>
-        <div
-          style={{
-            transform: `translateX(${this.state.distanceFromCenter}px)`
-          }}
-          className="images"
-        >
+        <div style={imageStyles} className="images">
           <img
             src={imagesUrls[currentImage]}
             alt={`Trabajos realizados ${currentImage + 1}`}
@@ -117,8 +143,7 @@ class Gallery extends React.Component {
 
 class App extends React.Component {
   state = {
-    mouseX: 0,
-    mouseY: 0
+    loaded: false
   };
 
   // setMouseXY()
@@ -130,7 +155,6 @@ class App extends React.Component {
   // };
 
   render() {
-    // console.log('state', this.state.mouseX, this.state.mouseY);
     return (
       <div className="App" onMouseMove={this.handleMouseMove}>
         <header className="App-header">

@@ -22,7 +22,9 @@ header h1 {
   z-index: 1;
 
   .images {
-    transition: all 0.2s ease;
+    transition: transform 0.4s cubic-bezier(0.31, 0.97, 0.82, 0.48),
+      opacity 0.5s ease;
+    opacity: 0;
   }
   img {
     max-width: 100%;
@@ -40,11 +42,11 @@ header h1 {
 
   #hover-button-left {
     right: 50%;
-    cursor: w-resize;
+    cursor: url(/images/prev.png), auto;
   }
   #hover-button-right {
     left: 50%;
-    cursor: e-resize;
+    cursor: url(/images/next.png), auto;
   }
 
   .button {
