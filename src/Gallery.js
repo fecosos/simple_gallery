@@ -23,8 +23,6 @@ function Gallery() {
 
   useEffect(() => {
     setTimeout(() => {
-      console.log("aca");
-
       setImageOpacity(1);
     }, 500);
   }, []);
