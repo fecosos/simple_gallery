@@ -35,16 +35,7 @@ function Gallery() {
     }, 100);
   }, [currentImage]);
 
-  // const fadeOutImage = () =>
-  //   new Promise(function(resolve, reject) {
-  //     setImageOpacity(0);
-  //     setTimeout(() => {
-  //       resolve();
-  //     }, 350);
-  //   });
-
   const handlePreviousImage = async () => {
-    // await fadeOutImage();
     if (currentImage !== 0) {
       setCurrentImage(currentImage - 1);
 
@@ -55,8 +46,6 @@ function Gallery() {
   };
 
   const handleNextImage = async () => {
-    // await fadeOutImage();
-
     if (currentImage !== imagesUrls.length - 1) {
       setCurrentImage(currentImage + 1);
 
@@ -87,6 +76,10 @@ function Gallery() {
     transform: props.xy.interpolate(trans1)
   };
 
+  const mobileButtonsStyles = {
+    display: !isMobile() ? "none" : "block"
+  };
+
   return (
     <div
       className="Gallery"
@@ -104,7 +97,11 @@ function Gallery() {
         onClick={handleNextImage}
         className="button-right"
       />
-      <button className="button left" onClick={handlePreviousImage}>
+      <button
+        className="button left"
+        style={mobileButtonsStyles}
+        onClick={handlePreviousImage}
+      >
         <img src={arrow_left} className="arrow left" alt="arrow left" />
       </button>
       <animated.div style={imageStyles} className="images">
@@ -119,7 +116,11 @@ function Gallery() {
           );
         })}
       </animated.div>
-      <button className="button right" onClick={handleNextImage}>
+      <button
+        className="button right"
+        style={mobileButtonsStyles}
+        onClick={handleNextImage}
+      >
         <img src={arrow_right} className="arrow right" alt="arrow right" />
       </button>
     </div>
