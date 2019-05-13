@@ -21,11 +21,26 @@ function Gallery() {
 
   const [currentImage, setCurrentImage] = useState(0);
 
+  const [isGalleryRunning, setGalleryRunning] = useState(true);
+
   useEffect(() => {
     setTimeout(() => {
       setImageOpacity(1);
     }, 500);
   }, []);
+
+  useEffect(() => {
+    let interval;
+    if (isGalleryRunning) {
+      interval = setInterval(() => {
+        handleNextImage();
+      }, 6000);
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
+  });
 
   useEffect(() => {
     setTimeout(() => {
@@ -82,6 +97,8 @@ function Gallery() {
     <div
       className="Gallery"
       onMouseMove={({ clientX: x, clientY: y }) => set({ xy: calc(x, y) })}
+      onMouseEnter={() => setGalleryRunning(false)}
+      onMouseLeave={() => setGalleryRunning(true)}
     >
       <div
         id="hover-button-left"
