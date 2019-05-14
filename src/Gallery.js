@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSpring, animated } from "react-spring";
 
-import arrow_right from "./assets/arrow-right.png";
-import arrow_left from "./assets/arrow-left.png";
+import arrow_right from "./assets/next.png";
+import arrow_left from "./assets/prev.png";
 import { imagesUrls } from "./assets/gallery";
 
 const isMobile = () => {
@@ -86,7 +86,7 @@ function Gallery() {
 
   const imageStyles = {
     opacity: imageOpacity,
-    transform: props.xy.interpolate(trans1)
+    transform: !isMobile() ? props.xy.interpolate(trans1) : "initial"
   };
 
   const mobileButtonsStyles = {

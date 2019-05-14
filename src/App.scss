@@ -74,14 +74,13 @@ header h1 {
     }
 
     & > .arrow {
-      width: 60px;
     }
     &.left {
-      left: 0;
+      left: 10px;
     }
 
     &.right {
-      right: 0;
+      right: 10px;
     }
   }
 }
@@ -113,12 +112,12 @@ header h1 {
   }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 900px) {
   .Gallery {
     .button {
       top: initial;
       position: fixed;
-      bottom: 0;
+      bottom: 22px;
     }
     .images {
       max-height: 90vh;

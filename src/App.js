@@ -19,9 +19,6 @@ class App extends React.Component {
   render() {
     return (
       <div className="App" onMouseMove={this.handleMouseMove}>
-        <header className="App-header">
-          <h1>página web en construcción</h1>
-        </header>
         <Gallery />
         <section className="footer">
           <span className="text">encontranos en </span>
