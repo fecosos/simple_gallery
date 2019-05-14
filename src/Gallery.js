@@ -48,7 +48,7 @@ function Gallery() {
     }, 100);
   }, [currentImage]);
 
-  const handlePreviousImage = async () => {
+  const handlePreviousImage = () => {
     if (currentImage !== 0) {
       setCurrentImage(currentImage - 1);
 
@@ -58,7 +58,7 @@ function Gallery() {
     setCurrentImage(imagesUrls.length - 1);
   };
 
-  const handleNextImage = async () => {
+  const handleNextImage = () => {
     if (currentImage !== imagesUrls.length - 1) {
       setCurrentImage(currentImage + 1);
 
