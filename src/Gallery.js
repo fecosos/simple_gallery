@@ -126,7 +126,7 @@ function Gallery() {
               style={{ opacity: `${index === currentImage ? 1 : 0}` }}
               src={image}
               key={index}
-              alt={`Trabajos realizados ${currentImage + 1}`}
+              alt={`Trabajos realizados ${index + 1}`}
             />
           );
         })}
