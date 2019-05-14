@@ -1,11 +1,11 @@
-import image_1 from "./01.jpg";
-import image_2 from "./02.jpg";
-import image_3 from "./03.jpg";
-import image_4 from "./04.jpg";
-import image_5 from "./05.jpg";
-import image_6 from "./06.jpg";
-import image_7 from "./07.jpg";
-import image_8 from "./08.jpg";
+import image_1 from "./Web1.jpg";
+import image_2 from "./Web2.jpg";
+import image_3 from "./Web3.jpg";
+import image_4 from "./Web4.jpg";
+import image_5 from "./Web5.jpg";
+import image_6 from "./Web6.jpg";
+import image_7 from "./Web7.jpg";
+import image_8 from "./Web8.jpg";
 
 export const imagesUrls = [
   image_1,
