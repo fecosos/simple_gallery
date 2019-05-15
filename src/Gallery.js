@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSpring, animated } from "react-spring";
 
 import arrow_right from "./assets/next.png";
@@ -22,6 +22,41 @@ function Gallery() {
   const [currentImage, setCurrentImage] = useState(0);
 
   const [isGalleryRunning, setGalleryRunning] = useState(true);
+
+  const [touchStartX, setStartTouchX] = useState(undefined);
+  const [touchEndX, setEndTouchX] = useState(undefined);
+
+  const handlePreviousImage = useCallback(() => {
+    if (currentImage !== 0) {
+      setCurrentImage(currentImage - 1);
+
+      return;
+    }
+
+    setCurrentImage(imagesUrls.length - 1);
+  }, [currentImage, setCurrentImage]);
+
+  const handleNextImage = useCallback(() => {
+    if (currentImage !== imagesUrls.length - 1) {
+      setCurrentImage(currentImage + 1);
+
+      return;
+    }
+
+    setCurrentImage(0);
+  }, [currentImage, setCurrentImage]);
+
+  const handleTouchStart = event => {
+    if (isMobile()) {
+      setStartTouchX(event.touches[0].screenX);
+    }
+  };
+
+  const handleTouchEnd = event => {
+    if (isMobile()) {
+      setEndTouchX(event.changedTouches[0].screenX);
+    }
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -48,25 +83,20 @@ function Gallery() {
     }, 100);
   }, [currentImage]);
 
-  const handlePreviousImage = () => {
-    if (currentImage !== 0) {
-      setCurrentImage(currentImage - 1);
+  useEffect(() => {
+    if (touchStartX && touchEndX) {
+      if (touchStartX > touchEndX && touchStartX - touchEndX > 100) {
+        handleNextImage();
+      }
 
-      return;
+      if (touchStartX < touchEndX && touchStartX - touchEndX < 100) {
+        handlePreviousImage();
+      }
+
+      setStartTouchX(0);
+      setEndTouchX(0);
     }
-
-    setCurrentImage(imagesUrls.length - 1);
-  };
-
-  const handleNextImage = () => {
-    if (currentImage !== imagesUrls.length - 1) {
-      setCurrentImage(currentImage + 1);
-
-      return;
-    }
-
-    setCurrentImage(0);
-  };
+  }, [touchStartX, touchEndX, handlePreviousImage, handleNextImage]);
 
   const buttonStyles = {
     display: isMobile() ? "none" : "block"
@@ -99,6 +129,8 @@ function Gallery() {
       onMouseMove={({ clientX: x, clientY: y }) => set({ xy: calc(x, y) })}
       onMouseEnter={() => setGalleryRunning(false)}
       onMouseLeave={() => setGalleryRunning(true)}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       <div
         id="hover-button-left"
