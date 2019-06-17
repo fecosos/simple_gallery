@@ -1,5 +1,6 @@
 import React from "react";
 import Gallery from "./Gallery";
+import Footer from "./Footer";
 
 import "./App.scss";
 
@@ -8,38 +9,11 @@ class App extends React.Component {
     loaded: false
   };
 
-  // setMouseXY()
-  // handleMouseMove = (event) => {
-  //   this.setState({
-  //     mouseX: event.clientX,
-  //     mouseY: event.clientY
-  //   })
-  // };
-
   render() {
     return (
       <div className="App" onMouseMove={this.handleMouseMove}>
         <Gallery />
-        <section className="footer">
-          <span className="text">encontranos en </span>
-          <a
-            className="instagram-link a-link"
-            href="https://www.instagram.com/estudio.ripani/"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            instagram
-          </a>
-          <span className="slash">—</span>
-          <a
-            href="mailto:info.ripani@gmail.com"
-            className="email-link a-link"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            info.ripani@gmail.com
-          </a>
-        </section>
+        <Footer />
       </div>
     );
   }
