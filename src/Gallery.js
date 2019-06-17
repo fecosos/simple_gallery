@@ -5,16 +5,7 @@ import arrow_right from "./assets/next.png";
 import arrow_left from "./assets/prev.png";
 import { imagesUrls } from "./assets/gallery";
 
-const isMobile = () => {
-  if (
-    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
-    )
-  ) {
-    return true;
-  }
-  return false;
-};
+import isMobile from "./helpers/isMobile";
 
 function Gallery() {
   const [imageOpacity, setImageOpacity] = useState(0);
@@ -106,6 +97,7 @@ function Gallery() {
     x - window.innerWidth / 2,
     y - window.innerHeight / 2
   ];
+
   const trans1 = (x, y) =>
     `translate3d(${Math.floor(x / 60)}px,${Math.floor(y / 70)}px,0)`;
 
